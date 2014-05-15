@@ -14,7 +14,8 @@
 	],
 	"require" : {
 		"laravel/framework" : "4.1.*",
-		"OCLC/Auth" : ">=1.0"
+		"OCLC/Auth" : ">=1.0",
+		"easyrdf/easyrdf" : "*"
 	},
 	"autoload" : {
 		"classmap" : [
