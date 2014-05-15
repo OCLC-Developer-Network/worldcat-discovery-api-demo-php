@@ -11,8 +11,10 @@ class SearchController extends BaseController {
 	
 	public function showResults()
 	{
-	    $query = 'kw:' . Input::get('q');
-	    $response = Bib::Search($query, Session::get('accessToken'));
+	    $query = Input::get('q');
+	    $facets = array('author' => 10, 'inLanguage' => 10);
+	    $options = array('facets' => $facets);
+	    $response = Bib::Search($query, Session::get('accessToken'), $options);
 	    if (is_a($response, '\Guzzle\Http\Exception\BadResponseException')) {
 	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	    } else {
