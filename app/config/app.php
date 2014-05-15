@@ -174,7 +174,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 	    'WSKey'           => 'OCLC\Auth\WSKey',
 	    'AccessToken'     => 'OCLC\Auth\AccessToken',
-	    'Bib'             => 'OCLC\WorldCatDiscovery\Bib',
+	    'Bib'             => 'WorldCat\Discovery\Bib',
 	    'Yaml'            => 'Symfony\Component\Yaml\Yaml',
 
 	),
