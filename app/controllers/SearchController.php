@@ -14,8 +14,7 @@ class SearchController extends BaseController {
 	    $query = 'kw:' . Input::get('q');
 	    $response = Bib::Search($query, Session::get('accessToken'));
 	    if (is_a($response, '\Guzzle\Http\Exception\BadResponseException')) {
-	        $error = new Error($response);
-	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $error));
+	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	    } else {
 	        $this->layout->content = View::make('search.results', array('title' => 'Search Results', 'search' => $response));
 	    }

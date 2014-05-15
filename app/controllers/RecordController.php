@@ -11,8 +11,7 @@ class RecordController extends BaseController {
 	    } else {
 	        $response = Bib::Find((int) $id, Session::get('accessToken'));
 	        if (is_a($response, '\Guzzle\Http\Exception\BadResponseException')) {
-	            $error = new Error($response);
-	            $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $error));
+	            $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	        } else {
 	            $this->layout->content = View::make('record', array('title' => $response->getName(), 'record' => $response));
 	        }
