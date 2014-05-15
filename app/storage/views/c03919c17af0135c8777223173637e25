@@ -1,0 +1,29 @@
+
+<?php $__env->startSection('content'); ?>
+<div id="search-results" resource="<?php echo $search->getUri(); ?>" typeof="<?php echo $search->type(); ?>">
+<h2>Results</h2>
+<p>Total Results - <?php echo e($search->getTotalResults()); ?></p>
+<?php foreach ($search->getSearchResults() as $result): ?>
+    <div class="search-result" resource="<?php echo $result->getId(); ?>" typeof="<?php echo $result->getType(); ?>">
+    <h3 class="title">
+        <span property="http://purl.org/goodrelations/v1#displayPosition"><?php echo $result->getDisplayPosition(); ?>. </span>
+        <span id="bibliographic-resource-name" property="schema:name"><?php echo link_to_route('fullRecord', $result->getName(), array($result->getOCLCNumber())); ?></span>
+        <span class="date-published" property="schema:datePublished"><?php echo $result->getDatePublished(); ?></span>
+    </h3>
+    <?php if ($result->getAuthor()): ?>
+    <p class="author" property="schema:author" resource="<?php echo $result->getAuthor()->getUri(); ?>" typeof="<?php echo $result->getAuthor()->type(); ?>">
+        <span property="schema:name"><?php echo $result->getAuthor()->getName(); ?></span>
+    </p>
+    <?php endif; ?>
+    <?php if ($result->getType()): ?>
+    <p class="format">
+        <span class="label">Format:</span>
+        <span class="value"><?php echo getFormatString($result->getType()); ?></span>
+    </p>
+    <?php endif; ?>
+    </div>
+<?php endforeach; ?>
+</div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

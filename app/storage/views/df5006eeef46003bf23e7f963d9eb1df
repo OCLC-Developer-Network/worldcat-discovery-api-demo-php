@@ -1,0 +1,18 @@
+
+<?php $__env->startSection('content'); ?>
+    <div class="span-24" id="header">
+        <div style="margin: 10px 10px; font-size: 2em;">My Library</div>
+    </div>    
+    <div id="search-wrapper" class="span-24">
+        <?php echo Form::open(array('url' => 'search', 'id' => 'search-form')); ?>
+        <?php echo Form::label('q', 'Catalog', array('style' => 'font-size: 2em; margin-right:1em;')); ?>
+        <?php echo Form::text('q', null, array('size' => 40)); ?>
+        <?php echo Form::submit('Search'); ?>
+        <?php echo Form::close(); ?>
+    </div>
+    <div class="span-24" id="footer">
+        <p>&nbsp;</p>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
