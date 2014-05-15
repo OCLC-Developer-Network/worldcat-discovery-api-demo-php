@@ -1,0 +1,46 @@
+{
+	"name" : "WorldCat/Discovery/Demo",
+	"description" : "Basic Laravel app for WorldCat Discovery API",
+	"keywords" : [
+		"WorldCat",
+		"Discovery"
+	],
+	"license" : "Apache-2.0",
+	"repositories" : [{
+			"type" : "git",
+			"url" : "https://github.com/OCLC-Developer-Network/oclc-auth-php.git"
+		}
+	],
+	"require" : {
+		"laravel/framework" : "4.1.*",
+		"symfony/yaml" : "~2.3.7",
+		"OCLC/Auth" : ">=1.0"
+	},
+	"autoload" : {
+		"classmap" : [
+			"app/controllers",
+			"app/models",
+			"app/tests/TestCase.php"
+		],
+		"files" : [
+			"app/helpers.php"
+		],
+		"psr-4" : {
+			"OCLC\\WorldCatDiscovery\\" : "app/models"
+		}
+	},
+	"scripts" : {
+		"post-install-cmd" : [
+			"php artisan clear-compiled",
+			"php artisan optimize"
+		],
+		"post-update-cmd" : [
+			"php artisan clear-compiled",
+			"php artisan optimize"
+		]
+	},
+	"config" : {
+		"preferred-install" : "dist"
+	},
+	"minimum-stability" : "stable"
+}
