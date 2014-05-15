@@ -15,6 +15,7 @@
 	"require" : {
 		"laravel/framework" : "4.1.*",
 		"OCLC/Auth" : ">=1.0",
+		"symfony/yaml" : "~2.3.7",
 		"easyrdf/easyrdf" : "*"
 	},
 	"autoload" : {
