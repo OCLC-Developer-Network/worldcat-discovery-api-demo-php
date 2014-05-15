@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost:9080/laravelTest',
+	'url' => 'http://localhost:9080/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -178,6 +178,7 @@ return array(
 	    'Yaml'            => 'Symfony\Component\Yaml\Yaml',
 
 	),
+    'QA' => TRUE,
     'institutionID' => '128807',
     'wskey' => $_ENV['wskey'],
     'secret' => $_ENV['secret'],

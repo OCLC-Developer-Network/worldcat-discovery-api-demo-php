@@ -24,9 +24,9 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(function ()
+$env = $app->detectEnvironment(function()
 {
-    return 'qa';
+    return $_SERVER['MY_LARAVEL_ENV'];
 });
 
 /*

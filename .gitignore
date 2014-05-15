@@ -1,3 +1,5 @@
 /vendor
 /composer.lock
 /.project
+/.env.php
+/.env.local.php
