@@ -9,12 +9,17 @@
 	"repositories" : [{
 			"type" : "git",
 			"url" : "https://github.com/OCLC-Developer-Network/oclc-auth-php.git"
+		},
+		{
+			"type" : "git",
+			"url" : "https://github.com/OCLC-Developer-Network/worldcat-discovery-php.git"
 		}
 	],
 	"require" : {
 		"laravel/framework" : "4.1.*",
 		"symfony/yaml" : "~2.3.7",
-		"OCLC/Auth" : ">=1.0"
+		"OCLC/Auth" : ">=1.0",
+		"WorldCat/Discovery" : ">=1.0" 
 	},
 	"autoload" : {
 		"classmap" : [
@@ -24,10 +29,7 @@
 		],
 		"files" : [
 			"app/helpers.php"
-		],
-		"psr-4" : {
-			"OCLC\\WorldCatDiscovery\\" : "app/models"
-		}
+		]
 	},
 	"scripts" : {
 		"post-install-cmd" : [
