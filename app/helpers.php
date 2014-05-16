@@ -29,6 +29,13 @@ function getLanguageString($language)
     return $languageFile[$language->getValue()];
 }
 
+function getMarcLanguageString($language)
+{
+    $languageFile = Yaml::parse(app_path() . '/config/marclanguages.yml');
+    return $languageFile[$language->getValue()];
+}
+
+
 function getFormatString($format){
     if (strchr($format, '/')) {
         $format = substr(strchr($format, '/'), 1);
@@ -70,4 +77,31 @@ function getFASTSubjects($subjects)
         return(strpos($subject->getURI(), 'fast'));
     });
     return $fastSubjects;
+}
+
+function getFacetDisplayName($facet, $facetValue)
+{
+    switch ($facet->getFacetIndex()) {
+    	case 'srw.ln':
+    	    $displayName = getMarcLanguageString($facetValue->getName()) . ' ' . $facetValue->getCount();
+    	    break;
+    	case 'srw.ap':
+    	    $displayName = ucfirst($facetValue->getName()) . ' ' . $facetValue->getCount();
+    	    break;
+    	default:
+    	    $displayName = $facetValue->getName() . ' ' . $facetValue->getCount();
+    	    break;
+    	    
+    }
+    return $displayName;
+}
+
+function getFacetRefineQuery($query, $facet, $facetValue)
+{
+    return $query . ' AND ' . $facet->getFacetIndex() . ':' . $facetValue->getName();
+}
+
+function pagination()
+{
+    
 }
