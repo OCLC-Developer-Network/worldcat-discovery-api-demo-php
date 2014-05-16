@@ -18,9 +18,9 @@ Route::get('/', function()
 
 
 if (Input::get('q')){
-    Route::match(array('GET', 'POST'), 'search', 'SearchController@showResults');
+    Route::match(array('GET', 'POST'), 'search', array('as' => 'searchResults', 'uses' => 'SearchController@showResults'));
 } else {
-    Route::match(array('GET', 'POST'), 'search', 'SearchController@showSearchForm');
+    Route::match(array('GET', 'POST'), 'search', array('as' => 'searchForm', 'uses' => 'SearchController@showSearchForm'));
 }
 
 Route::get('record/{id}', array('as' => 'fullRecord', 'uses' => 'RecordController@getByID'));
