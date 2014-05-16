@@ -17,8 +17,8 @@
     <h2>Results</h2>
     <div class="search-page-navigation span18 last">
         <div class="previous span-6 first">
-            @if ($pagination['previous_page_start'])
-                {{link_to_route('searchResults', 'Previous', array('q' =>'query', 'startNum' => $pagination['previous_page_start']))}}
+            @if (isset($pagination['previous_page_start']))
+                {{link_to_route('searchResults', 'Previous', array('q' => $query, 'startNum' => $pagination['previous_page_start']))}}
             @else
                 <span class="inactive-link">Previous</span>
             @endif
