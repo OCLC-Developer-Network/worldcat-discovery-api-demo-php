@@ -178,10 +178,9 @@ return array(
 	    'Yaml'            => 'Symfony\Component\Yaml\Yaml',
 
 	),
-    'QA' => TRUE,
     'institutionID' => '128807',
     'wskey' => $_ENV['wskey'],
     'secret' => $_ENV['secret'],
-    'DiscoveryAPIURL' => $_ENV['DiscoveryAPIURL'],
-    'AuthorizationServerURL' => $_ENV['AuthorizationServerURL']
+    'DiscoveryAPIURL' => 'https://beta.worldcat.org/discovery',
+    'AuthorizationServerURL' => 'https://authn.sd00.worldcat.org/oauth2'
 );
