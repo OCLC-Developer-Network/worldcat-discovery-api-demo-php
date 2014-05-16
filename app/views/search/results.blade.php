@@ -27,7 +27,7 @@
         #{{$pagination['first']}} - #{{$pagination['last']}} of #{{$pagination['total']}}
         </div>
         <div class="next span-6 last">
-            @if ($pagination['next_page_start'])
+            @if (isset($pagination['next_page_start']))
                 {{link_to_route('searchResults', 'Next', array('q' => $query, 'startNum' => $pagination['next_page_start']))}}
             @else
                 <span class="inactive-link">Next</span>
