@@ -8,15 +8,18 @@
 	],
 	"license" : "Apache-2.0",
 	"repositories" : [{
-			"type" : "git",
-			"url" : "https://github.com/OCLC-Developer-Network/oclc-auth-php.git"
-		}
+	    "type": "git",
+	    "url": "https://github.com/OCLC-Developer-Network/worldcat-discovery-php.git"
+	    },
+	    {
+	    "type": "git",
+	    "url": "https://github.com/OCLC-Developer-Network/oclc-auth-php.git"
+	    }
 	],
 	"require" : {
 		"laravel/framework" : "4.1.*",
-		"OCLC/Auth" : ">=1.0",
 		"symfony/yaml" : "~2.3.7",
-		"easyrdf/easyrdf" : "*"
+		"worldcat/discovery" : ">=1.0"
 	},
 	"autoload" : {
 		"classmap" : [
