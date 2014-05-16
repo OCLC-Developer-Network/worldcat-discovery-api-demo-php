@@ -8,34 +8,53 @@
         <h3>{{$facet->getFacetIndex()}}</h3>
         <ul class="facet-items">
         @foreach ($facet->getFacetValues() as $facetValue)
-            <li>{{$facetValue->getName()}} {{$facetValue->getCount()}}</li>
+            <li>{{link_to_route('searchResults', getFacetDisplayName($facet, $facetValue), array('q' => getFacetRefineQuery($query, $facet, $facetValue)))}}</li>
         @endforeach
         </ul>
     @endforeach
     </div>
     <div id="search-results" class="span-18 last" resource="{{$search->getUri()}}" typeof="{{$search->type()}}">
     <h2>Results</h2>
-    <p>Total Results - {{{$search->getTotalResults()}}}</p>
-    @foreach ($search->getSearchResults() as $result)
-        <div class="search-result" resource="{{$result->getId()}}" typeof="{{$result->getType()}}">
-        <h3 class="title">
-            <span property="http://purl.org/goodrelations/v1#displayPosition">{{$result->getDisplayPosition()}}. </span>
-            <span id="bibliographic-resource-name" property="schema:name">{{link_to_route('fullRecord', $result->getName(), array($result->getOCLCNumber()))}}</span>
-            <span class="date-published" property="schema:datePublished">{{$result->getDatePublished()}}</span>
-        </h3>
-        @if ($result->getAuthor())
-        <p class="author" property="schema:author" resource="{{$result->getAuthor()->getUri()}}" typeof="{{$result->getAuthor()->type()}}">
-            <span property="schema:name">{{$result->getAuthor()->getName()}}</span>
-        </p>
-        @endif
-        @if ($result->getType())
-        <p class="format">
-            <span class="label">Format:</span>
-            <span class="value">{{getFormatString($result->getType())}}</span>
-        </p>
-        @endif
+    <div class="search-page-navigation span18 last">
+        <div class="previous span-6 first">
+            @if ($pagination['previous_page_start'])
+                {{link_to_route('searchResults', 'Previous', array('q' =>'query', 'startNum' => $pagination['previous_page_start']))}}
+            @else
+                <span class="inactive-link">Previous</span>
+            @endif
         </div>
-    @endforeach
+        <div class="numbering span-6">
+        #{{$pagination['first']}} - #{{$pagination['last']}} of #{{$pagination['total']}}
+        </div>
+        <div class="next span-6 last">
+            @if ($pagination['next_page_start'])
+                {{link_to_route('searchResults', 'Next', array('q' => $query, 'startNum' => $pagination['next_page_start']))}}
+            @else
+                <span class="inactive-link">Next</span>
+            @endif
+        </div>
+    </div>
+    <ol id="results-items" start="{{$search->getStartIndex()+1}}">
+        @foreach ($search->getSearchResults() as $result)
+            <li class="search-result" resource="{{$result->getId()}}" typeof="{{$result->getType()}}">
+            <h3 class="title">
+                <span id="bibliographic-resource-name" property="schema:name">{{link_to_route('fullRecord', $result->getName(), array($result->getOCLCNumber()))}}</span>
+                <span class="date-published" property="schema:datePublished">{{$result->getDatePublished()}}</span>
+            </h3>
+            @if ($result->getAuthor())
+            <p class="author" property="schema:author" resource="{{$result->getAuthor()->getUri()}}" typeof="{{$result->getAuthor()->type()}}">
+                <span property="schema:name">{{$result->getAuthor()->getName()}}</span>
+            </p>
+            @endif
+            @if ($result->getType())
+            <p class="format">
+                <span class="label">Format:</span>
+                <span class="value">{{getFormatString($result->getType())}}</span>
+            </p>
+            @endif
+            </li>
+        @endforeach
+    </ol>
     </div>
 </div>
 @stop

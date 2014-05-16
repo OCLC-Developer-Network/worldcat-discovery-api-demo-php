@@ -14,11 +14,17 @@ class SearchController extends BaseController {
 	    $query = Input::get('q');
 	    $facets = array('author' => 10, 'inLanguage' => 10);
 	    $options = array('facets' => $facets);
+	    
+	    if (Input::get('startNum')){
+	        $options['startNum'] = Input::get('startNum');
+	    }
+	    
 	    $response = Bib::Search($query, Session::get('accessToken'), $options);
 	    if (is_a($response, '\Guzzle\Http\Exception\BadResponseException')) {
 	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	    } else {
-	        $this->layout->content = View::make('search.results', array('title' => 'Search Results', 'search' => $response));
+	        
+	        $this->layout->content = View::make('search.results', array('title' => 'Search Results', 'search' => $response, 'query' => $query, 'pagination' => pagination($response)));
 	    }
 	}
 }

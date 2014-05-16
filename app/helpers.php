@@ -86,7 +86,7 @@ function getFacetDisplayName($facet, $facetValue)
     	    $displayName = getMarcLanguageString($facetValue->getName()) . ' ' . $facetValue->getCount();
     	    break;
     	case 'srw.ap':
-    	    $displayName = ucfirst($facetValue->getName()) . ' ' . $facetValue->getCount();
+    	    $displayName = ucwords($facetValue->getName()) . ' ' . $facetValue->getCount();
     	    break;
     	default:
     	    $displayName = $facetValue->getName() . ' ' . $facetValue->getCount();
@@ -101,7 +101,13 @@ function getFacetRefineQuery($query, $facet, $facetValue)
     return $query . ' AND ' . $facet->getFacetIndex() . ':' . $facetValue->getName();
 }
 
-function pagination()
+function pagination($search)
 {
-    
+    $pagination = array();
+    $pagination['first'] = $search->getStartIndex() +1;
+    $pagination['last'] = $pagination['first'] + $search->getItemsPerPage() -1;
+    $pagination['total'] = $search->getTotalResults();
+    $pagination['next_page_start'] = ($pagination['first'] + $search->getItemsPerPage() -1) > $search->getTotalResults() ? null : $pagination['first'] + $search->getItemsPerPage() -1;
+    $pagination['previous_page_start'] = ($pagination['first'] - 11) < 0 ? null : $pagination['first'] - 11;
+    return $pagination;
 }
