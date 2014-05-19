@@ -1,6 +1,6 @@
 # Worldcat Discovery Sample App
 
-An App that demonstrates using WorldCat Discovery to build a search interface
+An App that demonstrates using WorldCat Discovery to build a search interface. There are currently no tests for this app. Tests will be added over the next few weeks.
 
 ## Installation
 
