@@ -79,13 +79,25 @@ function getFASTSubjects($subjects)
     return $fastSubjects;
 }
 
+function camelCaseToTitle($facetIndex)
+{
+    $output = "";
+    foreach( str_split( $facetIndex ) as $char ) {
+            strtoupper( $char ) == $char and $output and $output .= " ";
+            $output .= $char;
+    }
+    return ucwords($output);
+}
+
 function getFacetDisplayName($facet, $facetValue)
 {
     switch ($facet->getFacetIndex()) {
-    	case 'srw.ln':
+    	case 'inLanguage':
     	    $displayName = getMarcLanguageString($facetValue->getName()) . ' ' . $facetValue->getCount();
     	    break;
-    	case 'srw.ap':
+    	case 'author':
+    	case 'about':
+    	case 'genre':
     	    $displayName = ucwords($facetValue->getName()) . ' ' . $facetValue->getCount();
     	    break;
     	default:

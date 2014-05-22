@@ -5,7 +5,7 @@
     <div id="facets" class="span-6">
     <h2>Facets</h2>
     @foreach ($search->getFacets() as $facet)
-        <h3>{{$facet->getFacetIndex()}}</h3>
+        <h3>{{camelCaseToTitle($facet->getFacetIndex())}}</h3>
         <ul class="facet-items">
         @foreach ($facet->getFacetValues() as $facetValue)
             <li>{{link_to_route('searchResults', getFacetDisplayName($facet, $facetValue), array('q' => getFacetRefineQuery($query, $facet, $facetValue)))}}</li>
