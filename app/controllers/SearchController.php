@@ -12,7 +12,7 @@ class SearchController extends BaseController {
 	public function showResults()
 	{
 	    $query = Input::get('q');
-	    $facets = array('author' => 10, 'inLanguage' => 10);
+	    $facets = array('about' => 10, 'author' => 10, 'datePublished' => 10, 'genre' => 10, 'itemType' => 10, 'inLanguage' => 10);
 	    $options = array('facets' => $facets);
 	    
 	    if (Input::get('startNum')){
