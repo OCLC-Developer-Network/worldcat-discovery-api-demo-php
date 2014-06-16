@@ -13,7 +13,14 @@ class RecordController extends BaseController {
 	        if (is_a($response, '\Guzzle\Http\Exception\BadResponseException')) {
 	            $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	        } else {
-	            $this->layout->content = View::make('record', array('title' => $response->getName(), 'record' => $response));
+	            if (Request::header('Accept') == 'application/rdf+xml')
+	            {
+	                $response->getGraph()->load($response->getAuthor()->getDbpediaUri());
+	                return Response::make($response->getGraph()->serialise('rdfxml'), 200, array('Content-Type' => 'application/rdf+xml'));
+	            } else { 
+	               $dbpediaPerson = loadDbpedia($response->getAuthor()->getDbpediaUri());
+	               $this->layout->content = View::make('record', array('title' => $response->getName(), 'record' => $response, 'dbpediaPerson' => $dbpediaPerson));
+	            }
 	        }
 	    }
 	}

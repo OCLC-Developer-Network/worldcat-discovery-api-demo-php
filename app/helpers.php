@@ -123,3 +123,21 @@ function pagination($search)
     $pagination['previous_page_start'] = ($pagination['first'] - 11) < 0 ? null : $pagination['first'] - 11;
     return $pagination;
 }
+
+function loadDbpedia($dbPediaPerson){
+    EasyRdf_Namespace::set('dbpediaOwl', 'http://dbpedia.org/ontology/');
+    EasyRdf_TypeMapper::delete('schema:Person', 'WorldCat\Discovery\Person');
+    EasyRdf_TypeMapper::set('dbpediaOwl:Writer', 'Writer');
+    EasyRdf_TypeMapper::set('dbpediaOwl:Artist', 'Artist');
+    EasyRdf_TypeMapper::set('foaf:Person', 'Writer');
+    
+    // get the dbpedia graph
+    $dbpediaPersonGraph = new EasyRdf_Graph();
+    try {
+        $dbpediaPersonGraph->load($dbPediaPerson);
+        $dbpediaPerson = $dbpediaPersonGraph->resource($dbPediaPerson);
+    } catch (\EasyRdf_Exception $error) {
+        $dbpediaPerson = null;
+    }
+    return $dbpediaPerson;
+}

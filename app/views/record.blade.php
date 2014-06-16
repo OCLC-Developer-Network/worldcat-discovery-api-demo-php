@@ -99,4 +99,8 @@
     </div>
     @endif
 </div>
+@if ($dbpediaPerson)
+    @include('authorInfo', array('dbpediaPerson'=> $dbpediaPerson))
+</div>
+@endif    
 @stop
