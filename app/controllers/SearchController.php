@@ -13,7 +13,14 @@ class SearchController extends BaseController {
 	{
 	    $query = Input::get('q');
 	    $facets = array('about' => 10, 'author' => 10, 'datePublished' => 10, 'genre' => 10, 'itemType' => 10, 'inLanguage' => 10);
-	    $options = array('facets' => $facets);
+	    $options = array('facetFields' => $facets);
+	    
+	    if (Input::get('facetQueries')){
+	        $facetQueries = convertFacetQueriesToArray(Input::get('facetQueries'));
+	        $options['facetQueries'] = $facetQueries;
+	    } else {
+	        $facetQueries = array();
+	    }
 	    
 	    if (Input::get('startNum')){
 	        $options['startNum'] = Input::get('startNum');
@@ -24,7 +31,7 @@ class SearchController extends BaseController {
 	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	    } else {
 	        
-	        $this->layout->content = View::make('search.results', array('title' => 'Search Results', 'search' => $response, 'query' => $query, 'pagination' => pagination($response)));
+	        $this->layout->content = View::make('search.results', array('title' => 'Search Results', 'search' => $response, 'query' => $query, 'pagination' => pagination($response), 'facetQueries' => $facetQueries));
 	    }
 	}
 }
