@@ -108,9 +108,38 @@ function getFacetDisplayName($facet, $facetValue)
     return $displayName;
 }
 
-function getFacetRefineQuery($query, $facet, $facetValue)
+function getFacetRefineQueryString($facet, $facetValue, $facetQueries = array(), $remove = false)
 {
-    return $query . ' AND ' . $facet->getFacetIndex() . ':' . $facetValue->getName();
+    if ($remove){
+        unset($facetQueries[$facet]);
+    } else {
+        if (empty($facetQueries[(string)$facet])){
+            $facetQueries[(string)$facet] = $facetValue;
+        }
+    }
+    
+    $facetQueriesString = '';
+    
+    foreach ($facetQueries as $facetQueryKey => $facetQueryValue){
+        $facetQueriesString .= $facetQueryKey . ':' . $facetQueryValue;
+        if ($facetQueryValue != end($facetQueries)){
+            $facetQueriesString .= ',';
+        }
+    }
+    
+    return $facetQueriesString;
+}
+
+function convertFacetQueriesToArray($facetQueriesString){
+    $facetQueries = explode(',', $facetQueriesString);
+    $i = 0;
+    foreach ($facetQueries as $facetQuery){
+        $facetQuery = explode(':', $facetQuery);
+        $facetQueries[$facetQuery[0]] = $facetQuery[1];
+        unset($facetQueries[$i]);
+        $i++;
+    }
+    return $facetQueries;
 }
 
 function pagination($search)
@@ -122,22 +151,4 @@ function pagination($search)
     $pagination['next_page_start'] = ($pagination['first'] + $search->getItemsPerPage() -1) > $search->getTotalResults() ? null : $pagination['first'] + $search->getItemsPerPage() -1;
     $pagination['previous_page_start'] = ($pagination['first'] - 11) < 0 ? null : $pagination['first'] - 11;
     return $pagination;
-}
-
-function loadDbpedia($dbPediaPerson){
-    EasyRdf_Namespace::set('dbpediaOwl', 'http://dbpedia.org/ontology/');
-    EasyRdf_TypeMapper::delete('schema:Person', 'WorldCat\Discovery\Person');
-    EasyRdf_TypeMapper::set('dbpediaOwl:Writer', 'Writer');
-    EasyRdf_TypeMapper::set('dbpediaOwl:Artist', 'Artist');
-    EasyRdf_TypeMapper::set('foaf:Person', 'Writer');
-    
-    // get the dbpedia graph
-    $dbpediaPersonGraph = new EasyRdf_Graph();
-    try {
-        $dbpediaPersonGraph->load($dbPediaPerson);
-        $dbpediaPerson = $dbpediaPersonGraph->resource($dbPediaPerson);
-    } catch (\EasyRdf_Exception $error) {
-        $dbpediaPerson = null;
-    }
-    return $dbpediaPerson;
 }
