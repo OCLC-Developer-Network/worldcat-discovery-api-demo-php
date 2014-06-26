@@ -8,7 +8,7 @@
         <h3>Selected Facets</h3>
         <ul>
         @foreach ($facetQueries as $facet => $facetValue)
-        <li>{{$facet}} {{link_to_route('searchResults', '[Remove]', array('q' => $query, 'facetQueries' => getFacetRefineQueryString($facet, $facetValue, $facetQueries, true)))}}</li>
+        <li>{{$facet}} {{link_to_route('searchResults', '[Remove]', array('q' => $query, 'facetQueries' => getFacetRefineQueryString($facet, $facetValue, $facetQueries, true), 'startNum' => $search->getStartIndex()))}}</li>
         @endforeach
         </ul>
     @endif
@@ -16,7 +16,7 @@
         <h3>{{camelCaseToTitle($facet->getFacetIndex())}}</h3>
         <ul class="facet-items">
         @foreach ($facet->getFacetValues() as $facetValue)
-            <li>{{link_to_route('searchResults', getFacetDisplayName($facet, $facetValue), array('q' => $query, 'facetQueries' => getFacetRefineQueryString($facet->getFacetIndex(), $facetValue->getName(), $facetQueries)))}}</li>
+            <li>{{link_to_route('searchResults', getFacetDisplayName($facet, $facetValue), array('q' => $query, 'facetQueries' => getFacetRefineQueryString($facet->getFacetIndex(), $facetValue->getName(), $facetQueries), 'startNum' => $search->getStartIndex()))}}</li>
         @endforeach
         </ul>
     @endforeach
@@ -26,7 +26,7 @@
     <div class="search-page-navigation span18 last">
         <div class="previous span-6 first">
             @if (isset($pagination['previous_page_start']))
-                {{link_to_route('searchResults', 'Previous', array('q' => $query, 'startNum' => $pagination['previous_page_start']))}}
+                {{link_to_route('searchResults', 'Previous', array('q' => $query, 'facetQueries' => getFacetQueryString($facetQueries), 'startNum' => $pagination['previous_page_start']))}}
             @else
                 <span class="inactive-link">Previous</span>
             @endif
@@ -36,7 +36,7 @@
         </div>
         <div class="next span-6 last">
             @if (isset($pagination['next_page_start']))
-                {{link_to_route('searchResults', 'Next', array('q' => $query, 'startNum' => $pagination['next_page_start']))}}
+                {{link_to_route('searchResults', 'Next', array('q' => $query, 'facetQueries' => getFacetQueryString($facetQueries), 'startNum' => $pagination['next_page_start']))}}
             @else
                 <span class="inactive-link">Next</span>
             @endif

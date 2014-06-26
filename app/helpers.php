@@ -118,6 +118,10 @@ function getFacetRefineQueryString($facet, $facetValue, $facetQueries = array(),
         }
     }
     
+    return getFacetQueryString($facetQueries);
+}
+
+function getFacetQueryString($facetQueries){
     $facetQueriesString = '';
     
     foreach ($facetQueries as $facetQueryKey => $facetQueryValue){
@@ -126,7 +130,6 @@ function getFacetRefineQueryString($facet, $facetValue, $facetQueries = array(),
             $facetQueriesString .= ',';
         }
     }
-    
     return $facetQueriesString;
 }
 
