@@ -4,11 +4,19 @@
 <div id="search-results" class="span24 last">
     <div id="facets" class="span-6">
     <h2>Facets</h2>
+    @if ($facetQueries)
+        <h3>Selected Facets</h3>
+        <ul>
+        @foreach ($facetQueries as $facet => $facetValue)
+        <li>{{$facet}} {{link_to_route('searchResults', '[Remove]', array('q' => $query, 'facetQueries' => getFacetRefineQueryString($facet, $facetValue, $facetQueries, true)))}}</li>
+        @endforeach
+        </ul>
+    @endif
     @foreach ($search->getFacets() as $facet)
         <h3>{{camelCaseToTitle($facet->getFacetIndex())}}</h3>
         <ul class="facet-items">
         @foreach ($facet->getFacetValues() as $facetValue)
-            <li>{{link_to_route('searchResults', getFacetDisplayName($facet, $facetValue), array('q' => getFacetRefineQuery($query, $facet, $facetValue)))}}</li>
+            <li>{{link_to_route('searchResults', getFacetDisplayName($facet, $facetValue), array('q' => $query, 'facetQueries' => getFacetRefineQueryString($facet->getFacetIndex(), $facetValue->getName(), $facetQueries)))}}</li>
         @endforeach
         </ul>
     @endforeach
