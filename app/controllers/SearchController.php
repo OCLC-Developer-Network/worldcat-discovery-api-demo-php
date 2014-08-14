@@ -27,7 +27,7 @@ class SearchController extends BaseController {
 	    }
 	    
 	    $response = Bib::Search($query, Session::get('accessToken'), $options);
-	    if (is_a($response, '\Guzzle\Http\Exception\BadResponseException')) {
+	    if (is_a($response, 'WorldCat\Discovery\Error')) {
 	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	    } else {
 	        

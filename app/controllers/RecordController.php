@@ -6,18 +6,14 @@ class RecordController extends BaseController {
     
 	public function getByID($id)
 	{
-	    if (Cache::has($id)) {
-	        return View::make('record', array('record' => Cache::get($id)));
+	    $response = Bib::Find($id, Session::get('accessToken'));
+	    
+	    if (is_a($response, 'WorldCat\Discovery\Error')) {
+	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
+	    } elseif(is_a($response, 'WorldCat\Discovery\Article')) {
+	        $this->layout->content = View::make('article', array('title' => $response->getName(), 'record' => $response));
 	    } else {
-	        $response = Bib::Find((int) $id, Session::get('accessToken'));
-	        if (is_a($response, '\Guzzle\Http\Exception\BadResponseException')) {
-	            $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
-	        } else {
-	            $this->layout->content = View::make('record', array('title' => $response->getName(), 'record' => $response, 'dbpediaPerson' => $dbpediaPerson));
-	        }
+	        $this->layout->content = View::make('record', array('title' => $response->getName(), 'record' => $response));
 	    }
 	}
-	
-	
-	    
 }
