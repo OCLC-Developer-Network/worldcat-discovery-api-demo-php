@@ -90,21 +90,24 @@ function camelCaseToTitle($facetIndex)
 }
 
 function getFulltextLink($record){
-    $kbresponse = Config::get('app.WorldCatKnowledgebaseAPIURL') . "/openurl/resolve?";
+    $kbrequest = Config::get('app.WorldCatKnowledgebaseAPIURL') . "/openurl/resolve?";
     if (is_a($record, 'WorldCat\Discovery\Article')){
         if ($record->getSameAs()){
             $doi = str_replace("http://dx.doi.org/", "info:doi:", $record->getSameAs());
-            $kbresponse .= 'rft_id=' . $doi;
+            $kbrequest .= 'rft_id=' . $doi;
         } else {
-            $kbresponse .= "rft.issn=" . $record->getWorkExample()->getISBN();
-            $kbresponse .= "&rft.volume=" . $record->getIsPartOf()->getVolume()->getVolumeNumber();
-            $kbresponse .= "&rft.issue=" . $record->getIsPartOf()->getIssueNumber();
-            $kbresponse .= "&rft.spage=" . $record->getPageStart();
-            $kbresponse .= "&rft.atitle=" . $record->getName();
+            $kbrequest .= "rft.issn=" . $record->getWorkExample()->getISBN();
+            $kbrequest .= "&rft.volume=" . $record->getIsPartOf()->getVolume()->getVolumeNumber();
+            $kbrequest .= "&rft.issue=" . $record->getIsPartOf()->getIssueNumber();
+            $kbrequest .= "&rft.spage=" . $record->getPageStart();
+            $kbrequest .= "&rft.atitle=" . $record->getName();
         }
     } else {
-        $kbresponse .= "rft.oclcnum=" . $record->getOCLCNumber();
-    }  
+        $kbrequest .= "rft.oclcnum=" . $record->getOCLCNumber();
+    }
+    $kbrequest .= '&wskey=' . Config::get('app.wskey');
+    
+    $kbresponse = json_decode(file_get_contents($kbrequest));
     if (isset($kbresponse[0]['url'])){
         return $kbresponse[0]['url'];
     }
