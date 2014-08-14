@@ -18,8 +18,14 @@
 	"require" : {
 		"laravel/framework" : "4.1.*",
 		"symfony/yaml" : "~2.3.7",
-		"worldcat/discovery" : ">=0.7"
+		"worldcat/discovery" : ">=0.8"
 	},
+	"require-dev" : {
+        "behat/behat" : "2.5.*@stable",
+        "behat/mink" : "1.5.*@stable",
+        "behat/mink-extension" : "*",
+        "behat/mink-goutte-driver" : "*"
+    },
 	"autoload" : {
 		"classmap" : [
 			"app/controllers",
