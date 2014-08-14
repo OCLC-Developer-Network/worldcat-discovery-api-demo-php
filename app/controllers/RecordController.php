@@ -6,14 +6,13 @@ class RecordController extends BaseController {
     
 	public function getByID($id)
 	{
-	    $response = Bib::Find($id, Session::get('accessToken'));
-	    
+	    $options = array('heldBy' => Config::get('app.heldBy'));
+	    $response = Offer::findByOclcNumber($id, Session::get('accessToken'), $options);
 	    if (is_a($response, 'WorldCat\Discovery\Error')) {
 	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
-	    } elseif(is_a($response, 'WorldCat\Discovery\Article')) {
-	        $this->layout->content = View::make('article', array('title' => $response->getName(), 'record' => $response));
-	    } else {
-	        $this->layout->content = View::make('record', array('title' => $response->getName(), 'record' => $response));
+	    } else{
+	        $creativeWorks = $response->getCreativeWorks();
+	        $this->layout->content = View::make('record', array('title' => $creativeWorks[0]->getName(), 'record' => $creativeWorks[0], 'offers' => $response->getOffers()));
 	    }
 	}
 }

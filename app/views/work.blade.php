@@ -32,41 +32,40 @@
     <br/>
     @endif
     
+    @if ($record->getBookEdition())
+    <span class="label">Edition: </span><span class="value" property="schema:bookEdition">{{$record->getBookEdition()}}</span>
+    <br/>
+    @endif
+    
     @if ($record->getLanguage())
     <span class="label">Language: </span><span class="value" property="schema:inLanguage">{{getLanguageString($record->getLanguage())}}</span>
     <br/>
     @endif
-
+    
     <span class="label">Published: </span>
+    <span class="value" property="http://purl.org/library/placeOfPublication">{{getPlaceOfPublicationString($record->getPlacesOfPublication())}}</span> : 
+    
+    @if ($record->getPublisher())
+    <span class="value"><span property="schema:publisher" typeof="{{$record->getPublisher()->type()}}"><span property="schema:name">{{$record->getPublisher()->getName()}}</span></span></span>
+    @endif
+    
     <span class="value" property="schema:datePublished">{{$record->getDatePublished()}}</span>
     <br/>
     
-    @if ($record->getIsPartOf())
-    <span property="schema:isPartOf" resource="{{$record->getIsPartOf()->getUri()}}">
-        <span property="schema:isPartOf" resource="{{$record->getIsPartOf()->getVolume()->getUri()}}">
-            <span property="schema:isPartOf" resource="{{$record->getIsPartOf()->getVolume()->getPeriodical()->getUri()}}">
-                <span class="label">Title: </span>
-                <span property="schema:name">{{$record->getIsPartOf()->getVolume()->getPeriodical()->getName()}}</span>
-            </span>
-            <span class="label">Volume: </span>
-            <span property="schema:volumeNumber">
-                {{$record->getIsPartOf()->getVolume()->getVolumeNumber()}}
-            </span>
-        </span>
-        <span class="label">Issue: </span>
-        <span property="schema:issueNumber">
-            {{$record->getIsPartOf()->getIssueNumber()}}
-        </span>
-    </span>
+    @if ($record->getNumberOfPages())
+    <span class="label">Physical Details: </span>
+    <span class="value"><span property="schema:numberOfPages">{{$record->getNumberOfPages()}}</span> pages</span>
     <br/>
     @endif
     
-    @if ($record->getPageStart())
-    <span class="label">Pages: </span>
-    <span class="value"><span property="schema:pageStart">{{$record->getPageStart()}}</span> - <span property="schema:pageEnd">{{$record->getPageEnd()}}</span></span>
+    @if (count($record->getManifestations()) > 0)
+    <span class="label">ISBNs:</span>
+    @foreach($record->getManifestations() as $manifestation)
+    <span class="value" property="schema:isbn">{{$manifestation->getISBN()}}</span>
+    @endforeach
     <br/>
     @endif
-        
+    
     <span class="label">OCLC Number:</span>
     <span class="value" property="http://purl.org/library/oclcnum">{{$record->getOCLCNumber()}}</span>
     <br/>
@@ -77,4 +76,23 @@
     <p property="schema:description">{{getDescriptionString($record->getDescriptions())}}</p>
     @endif
     
+    @if ($record->getGenres())
+    <h3>Genres</h3>
+    <ul>
+        @foreach (getDistinctGenres($record->getGenres()) as $genre)
+        <li property="schema:genre">{{$genre}}</li>
+        @endforeach
+    </ul>
+    @endif
+    
+    @if (count($record->getReviews()) > 0)
+    <div property="schema:reviews">
+        <h3>Reviews</h3>
+        @foreach($record->getReviews() as $review)
+        <div resource="{{$review->getUri()}}" typeof="schema:Review">
+            <p property="schema:reviewBody">{{$review->getReviewBody()}}</p>
+        </div>
+        @endforeach
+    </div>
+    @endif
 </div>
