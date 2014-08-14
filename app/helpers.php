@@ -89,6 +89,27 @@ function camelCaseToTitle($facetIndex)
     return ucwords($output);
 }
 
+function getFulltextLink($record){
+    $kbresponse = Config::get('app.WorldCatKnowledgebaseAPIURL') . "/openurl/resolve?";
+    if (is_a($record, 'WorldCat\Discovery\Article')){
+        if ($record->getSameAs()){
+            $doi = str_replace("http://dx.doi.org/", "info:doi:", $record->getSameAs());
+            $kbresponse .= 'rft_id=' . $doi;
+        } else {
+            $kbresponse .= "rft.issn=" . $record->getWorkExample()->getISBN();
+            $kbresponse .= "&rft.volume=" . $record->getIsPartOf()->getVolume()->getVolumeNumber();
+            $kbresponse .= "&rft.issue=" . $record->getIsPartOf()->getIssueNumber();
+            $kbresponse .= "&rft.spage=" . $record->getPageStart();
+            $kbresponse .= "&rft.atitle=" . $record->getName();
+        }
+    } else {
+        $kbresponse .= "rft.oclcnum=" . $record->getOCLCNumber();
+    }  
+    if (isset($kbresponse[0]['url'])){
+        return $kbresponse[0]['url'];
+    }
+}
+
 function getFacetDisplayName($facet, $facetValue)
 {
     switch ($facet->getFacetIndex()) {
