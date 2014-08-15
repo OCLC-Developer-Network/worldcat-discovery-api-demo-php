@@ -96,18 +96,22 @@ function getFulltextLink($record){
             $doi = str_replace("http://dx.doi.org/", "info:doi:", $record->getSameAs());
             $kbrequest .= 'rft_id=' . $doi;
         } else {
-            $kbrequest .= "rft.issn=" . $record->getWorkExample()->getISBN();
+            $kbrequest .= "rft.issn=" . $record->getIsPartOf()->getVolume()->getPeriodical()->getIssn();
             $kbrequest .= "&rft.volume=" . $record->getIsPartOf()->getVolume()->getVolumeNumber();
             $kbrequest .= "&rft.issue=" . $record->getIsPartOf()->getIssueNumber();
             $kbrequest .= "&rft.spage=" . $record->getPageStart();
             $kbrequest .= "&rft.atitle=" . $record->getName();
         }
-    } else {
+    } elseif ($record->getManifestations()) {
+        $manifestations = $record->getManifestations();
+        $kbrequest .= "rft.isbn=" . $manifestations[0]->getISBN();
+    }else {
         $kbrequest .= "rft.oclcnum=" . $record->getOCLCNumber();
     }
     $kbrequest .= '&wskey=' . Config::get('app.wskey');
+     
+    $kbresponse = json_decode(file_get_contents($kbrequest), true);
     
-    $kbresponse = json_decode(file_get_contents($kbrequest));
     if (isset($kbresponse[0]['url'])){
         return $kbresponse[0]['url'];
     }

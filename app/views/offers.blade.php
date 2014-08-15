@@ -3,10 +3,10 @@
     <h2>Holdings</h2>
     <ul>
     @foreach ($offers as $offer)
-        <li>{{$offer->getSeller()->getName()}} - {{$offer->getItemOffered()->getCollection()->getManagedBy()->getName()}}</li>
+        <li>{{$offer->getSeller()->getName()}}}}</li>
     @endforeach
     @if (getFulltextLink($record))
-        <li><a href=">{{getFulltextLink($record)}}">Get Electronic Copy</a></li>
+        <li>{{link_to(getFulltextLink($record), 'Get Electronic Copy')}}</li>
     @endif
     </ul>
 @endif
