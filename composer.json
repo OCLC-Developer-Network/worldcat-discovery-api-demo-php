@@ -18,7 +18,7 @@
 	"require" : {
 		"laravel/framework" : "4.1.*",
 		"symfony/yaml" : "~2.3.7",
-		"worldcat/discovery" : ">=0.9.2"
+		"worldcat/discovery" : ">=0.9.3"
 	},
 	"require-dev" : {
         "behat/behat" : "2.5.*@stable",
