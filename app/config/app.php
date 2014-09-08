@@ -175,7 +175,7 @@ return array(
 	    'WSKey'           => 'OCLC\Auth\WSKey',
 	    'AccessToken'     => 'OCLC\Auth\AccessToken',
 	    'Bib'             => 'WorldCat\Discovery\Bib',
-	    'Offer'             => 'WorldCat\Discovery\Offer',
+	    'Offer'           => 'WorldCat\Discovery\Offer',
 	    'Yaml'            => 'Symfony\Component\Yaml\Yaml',
 
 	),
@@ -185,5 +185,6 @@ return array(
     'DiscoveryAPIURL' => 'https://beta.worldcat.org/discovery',
     'AuthorizationServerURL' => 'https://authn.sd00.worldcat.org/oauth2',
     'WorldCatKnowledgebaseAPIURL' => 'http://worldcat.org/webservices/kb',
-    'heldBy' => 'OCPSB,OCWMS',
+    'heldBy' => array('OCPSB', 'OCWMS'),
+    'facets' => array('about:10', 'author:10', 'datePublished:10', 'genre:10', 'itemType:10', 'inLanguage:10'),
 );
