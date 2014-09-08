@@ -1,5 +1,20 @@
 <?php
-
+function getAuthorString($authors){
+    $i = 0;
+    $authorsString = '';
+    foreach ($authors as $key => $author){
+        $authorsString .= '<span id="author" property="schema:author" resource="{{$author->getUri()}}" typeof="' . $author->type() . '">';
+        $authorsString .= '<span id="author-name" property="schema:name">';
+        $authorsString .= $author->getName();
+        $authorsString .= '</span>';
+        $authorsString .= '</span>';
+        if (++$i != count($authors)){
+            $authorsString .= ', ';
+        }
+    }
+    
+    return $authorsString;
+}
 function getPlaceOfPublicationString($placesOfPublication){
     if (count($placesOfPublication) == 1){
         return $placesOfPublication;
