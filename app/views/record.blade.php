@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<div id="bibliographic-resource" class="span24 last">
+<div id="bibliographic-resource" class="span24" style="margin-top: 2em">
 @if (is_a($record, 'WorldCat\Discovery\Article'))
     @include('article', array('record', $record))
 @else    
