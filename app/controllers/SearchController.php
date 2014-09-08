@@ -12,8 +12,7 @@ class SearchController extends BaseController {
 	public function showResults()
 	{
 	    $query = Input::get('q');
-	    $facets = array('about' => 10, 'author' => 10, 'datePublished' => 10, 'genre' => 10, 'itemType' => 10, 'inLanguage' => 10);
-	    $options = array('facetFields' => $facets);
+	    $options = array('facetFields' => Config::get('app.facets'));
 	    
 	    if (Input::get('facetQueries')){
 	        $facetQueries = convertFacetQueriesToArray(Input::get('facetQueries'));
