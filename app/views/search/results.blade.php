@@ -15,7 +15,7 @@
     @foreach ($search->getFacets() as $facet)
         <h3>{{camelCaseToTitle($facet->getFacetIndex())}}</h3>
         <ul class="facet-items">
-        @foreach ($facet->getFacetValues() as $facetValue)
+        @foreach ($facet->getFacetItems() as $facetValue)
             <li>{{link_to_route('searchResults', getFacetDisplayName($facet, $facetValue), array('q' => $query, 'facetQueries' => getFacetRefineQueryString($facet->getFacetIndex(), $facetValue->getName(), $facetQueries), 'startNum' => $search->getStartIndex()))}}</li>
         @endforeach
         </ul>
