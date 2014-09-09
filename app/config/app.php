@@ -186,5 +186,5 @@ return array(
     'AuthorizationServerURL' => 'https://authn.sd00.worldcat.org/oauth2',
     'WorldCatKnowledgebaseAPIURL' => 'http://worldcat.org/webservices/kb',
     'heldBy' => array('OCPSB', 'OCWMS'),
-    'facets' => array('about:10', 'author:10', 'datePublished:10', 'genre:10', 'itemType:10', 'inLanguage:10'),
+    'facets' => array('about:10', 'creator:10', 'datePublished:10', 'genre:10', 'itemType:10', 'inLanguage:10'),
 );
