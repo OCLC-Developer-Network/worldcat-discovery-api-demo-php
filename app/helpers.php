@@ -5,7 +5,7 @@ function getAuthorString($authors){
     foreach ($authors as $key => $author){
         $authorsString .= '<span id="author" property="schema:author" resource="{{$author->getUri()}}" typeof="' . $author->type() . '">';
         $authorsString .= '<span id="author-name" property="schema:name">';
-        $authorsString .= $author->getName();
+        $authorsString .= link_to_route('authorityRecord', $author->getName(), array('uri' => $author->getUri()));
         $authorsString .= '</span>';
         $authorsString .= '</span>';
         if (++$i != count($authors)){

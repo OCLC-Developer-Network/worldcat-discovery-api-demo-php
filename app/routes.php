@@ -24,3 +24,4 @@ if (Input::get('q')){
 }
 
 Route::get('record/{id}', array('as' => 'fullRecord', 'uses' => 'RecordController@getByID'));
+Route::get('authority', array('as' => 'authorityRecord', 'uses' => 'ThingController@getByURI'));
