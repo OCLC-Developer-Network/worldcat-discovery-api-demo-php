@@ -1,4 +1,4 @@
-<div id="availability-and-more" class="span-10 last">
+
     <div id="availability" class="span-10">
     <h2>Availability</h2>
     @if ($offers || getFulltextLink($record))
@@ -12,6 +12,3 @@
         <p>This item is not available at your library</p>
     @endif
     </div>
-    <div id="more-info" class="span-10 last"/>
-    
-</div>
