@@ -29,7 +29,6 @@
 	"autoload" : {
 		"classmap" : [
 			"app/controllers",
-			"app/models",
 			"app/tests/TestCase.php"
 		],
 		"files" : [
