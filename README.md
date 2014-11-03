@@ -42,4 +42,4 @@ return array(
 
 To run the app, point your web browser at the localhost address where these instructions will install it by default. 
 
-[http://localhost/worldcat-discovery-api-demo/](http://localhost/worldcat-discovery-api-demo-php/public/)
+[http://localhost/worldcat-discovery-api-demo-php/public/](http://localhost/worldcat-discovery-api-demo-php/public/)
