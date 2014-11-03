@@ -10,7 +10,7 @@ In a Terminal Window
 
 ```bash
 $ cd {YOUR-APACHE-DOCUMENT-ROOT}
-$ git clone https://github.com/OCLC-Developer-Network/worldcat-discovery-api-demo.git
+$ git clone https://github.com/OCLC-Developer-Network/worldcat-discovery-api-demo-php.git
 $ cd worldcat-discovery-api-demo
 ```
 
@@ -42,4 +42,4 @@ return array(
 
 To run the app, point your web browser at the localhost address where these instructions will install it by default. 
 
-[http://localhost/worldcat-discovery-api-demo/](http://localhost/worldcat-discovery-api-demo/)
+[http://localhost/worldcat-discovery-api-demo/](http://localhost/worldcat-discovery-api-demo-php/public/)
