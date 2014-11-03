@@ -11,7 +11,7 @@ In a Terminal Window
 ```bash
 $ cd {YOUR-APACHE-DOCUMENT-ROOT}
 $ git clone https://github.com/OCLC-Developer-Network/worldcat-discovery-api-demo-php.git
-$ cd worldcat-discovery-api-demo
+$ cd worldcat-discovery-api-demo-php
 ```
 
 ### Step 2: Use composer to install the dependencies
