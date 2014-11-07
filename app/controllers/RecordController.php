@@ -12,7 +12,9 @@ class RecordController extends BaseController {
 	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	    } else{
 	        $creativeWorks = $response->getCreativeWorks();
-	        $this->layout->content = View::make('record', array('title' => $creativeWorks[0]->getName(), 'record' => $creativeWorks[0], 'offers' => $response->getOffers()));
+	        $identityKnows = identityKnows($creativeWorks[0]->getAuthor()->getFamilyName()->getValue(), $creativeWorks[0]->getOCLCNumber()->getValue());
+	        $reccomendations = getReccomendations($creativeWorks[0]->getOCLCNumber()->getValue());
+	        $this->layout->content = View::make('record', array('title' => $creativeWorks[0]->getName(), 'record' => $creativeWorks[0], 'offers' => $response->getOffers(), 'identityKnows' => $identityKnows, 'reccomendations' => $reccomendations));
 	    }
 	}
 }

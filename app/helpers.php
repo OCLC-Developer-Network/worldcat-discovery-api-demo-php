@@ -1,4 +1,45 @@
 <?php
+function identityKnows($authorFamilyName, $oclcNumber){
+    $identityURI = getIdentityURI($authorFamilyName, $oclcNumber);
+    $graph = getIdentityGraph($identityURI);
+    $identityKnows = $graph->resource($identityURI)->allResources('schema:knows');
+    
+    return $identityKnows;
+}
+
+function getIdentityURI($authorFamilyName, $oclcNumber){
+    $identityOpenURL = 'http://www.worldcat.org/identities/find?url_ver=Z39.88-2004&rft_val_fmt=info:ofi/fmt:kev:mtx:identity&';
+    $identityOpenURL .= 'rft.namelast=' . $authorFamilyName  . '&rft_id=info:oclcnum/' . $oclcNumber;
+    $identity_xml = simplexml_load_file($identityOpenURL);
+    $identityURI = 'http://www.worldcat.org/identities/' . $identity_xml->match->key;
+    return $identityURI;
+}
+
+function getIdentityGraph($identityURI){
+    $identityGraph = new EasyRDF_Graph($identityURI);
+    $identityGraph->load();
+    foreach ($identityGraph->resource($identityURI)->allResources('schema:knows') as $knows){
+        $identityGraph->load($knows);
+    }
+    return $identityGraph;
+}
+
+function getReccomendations($oclcNumber){
+    $reccomenderRequestURL = 'http://experimental.worldcat.org/recommender/MLT/'. $oclcNumber;
+    $reccomenderXML = simplexml_load_file($reccomenderRequestURL);
+    $reccomenderXML->registerXPathNamespace('recs', 'http://recommender.oclc.org');
+    $reccomendations = $reccomenderXML->xpath('//recs:likeItems/recs:likeItem');
+    
+    array_walk($reccomendations, function(&$reccomendation)
+    {
+        $reccomendation = array('title' => $reccomendation->attributes()->title, 'oclcNumber' => $reccomendation->attributes()->ocn);
+    });
+    
+    
+    
+    return $reccomendations;
+}
+
 function getAuthorString($authors){
     $i = 0;
     $authorsString = '';
@@ -117,7 +158,7 @@ function getFulltextLink($record){
             $kbrequest .= "&rft.spage=" . $record->getPageStart();
             $kbrequest .= "&rft.atitle=" . $record->getName();
         }
-    } elseif ($record->getManifestations()) {
+    } elseif (get_class($record) == "Book" && $record->getManifestations()) {
         $manifestations = $record->getManifestations();
         $kbrequest .= "rft.isbn=" . $manifestations[0]->getISBN();
     }else {
@@ -130,6 +171,10 @@ function getFulltextLink($record){
     if (isset($kbresponse[0]['url'])){
         return $kbresponse[0]['url'];
     }
+}
+
+function getRealTimeAvailability($oclcNumber, $registryID = null){
+    
 }
 
 function getFacetDisplayName($facet, $facetValue)

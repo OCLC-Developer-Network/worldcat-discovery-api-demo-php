@@ -34,7 +34,7 @@
         <br/>
         @endif
         
-        @if ($record->getBookEdition())
+        @if (get_class($record) == "Book" && $record->getBookEdition())
         <span class="label">Edition: </span><span class="value" property="schema:bookEdition">{{$record->getBookEdition()}}</span>
         <br/>
         @endif
@@ -54,13 +54,13 @@
         <span class="value" property="schema:datePublished">{{$record->getDatePublished()}}</span>
         <br/>
         
-        @if ($record->getNumberOfPages())
+        @if (get_class($record) == "Book" && $record->getNumberOfPages())
         <span class="label">Physical Details: </span>
         <span class="value"><span property="schema:numberOfPages">{{$record->getNumberOfPages()}}</span> pages</span>
         <br/>
         @endif
         
-        @if (count($record->getManifestations()) > 0)
+        @if (get_class($record) == "Book" && count($record->getManifestations()) > 0)
         <span class="label">ISBNs:</span>
         @foreach($record->getManifestations() as $manifestation)
         <span class="value" property="schema:isbn">{{$manifestation->getISBN()}}</span>
@@ -97,5 +97,8 @@
             @endforeach
         </div>
         @endif
+        
+        @include('reccomendations', array('reccomendations'=> $reccomendations))
+</div>
     </div>
 </div>
