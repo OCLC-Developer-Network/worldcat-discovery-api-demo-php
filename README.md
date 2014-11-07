@@ -10,8 +10,8 @@ In a Terminal Window
 
 ```bash
 $ cd {YOUR-APACHE-DOCUMENT-ROOT}
-$ git clone https://github.com/OCLC-Developer-Network/worldcat-discovery-api-demo.git
-$ cd worldcat-discovery-api-demo
+$ git clone https://github.com/OCLC-Developer-Network/worldcat-discovery-api-demo-php.git
+$ cd worldcat-discovery-api-demo-php
 ```
 
 ### Step 2: Use composer to install the dependencies
@@ -23,7 +23,7 @@ $ php composer.phar install
 
 [Composer](https://getcomposer.org/doc/00-intro.md) is a dependency management library for PHP. It is used to install the required libraries for testing and parsing RDF data. The dependencies are configured in the file `composer.json`.
 
-### Step 3: Comfigure your environment file with your WSKey/secret and other info
+### Step 3: Configure your environment file with your WSKey/secret and other info
 
 ```bash
 $ vi .env.php
@@ -42,4 +42,4 @@ return array(
 
 To run the app, point your web browser at the localhost address where these instructions will install it by default. 
 
-[http://localhost/worldcat-discovery-api-demo/](http://localhost/worldcat-discovery-api-demo/)
+[http://localhost/worldcat-discovery-api-demo-php/public/](http://localhost/worldcat-discovery-api-demo-php/public/)
