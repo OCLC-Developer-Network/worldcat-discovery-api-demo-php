@@ -185,6 +185,10 @@ return array(
     'DiscoveryAPIURL' => 'https://beta.worldcat.org/discovery',
     'AuthorizationServerURL' => 'https://authn.sd00.worldcat.org/oauth2',
     'WorldCatKnowledgebaseAPIURL' => 'http://worldcat.org/webservices/kb',
+    'WMSAvailabilityAPIURL' => 'https://worldcat.org/circ/availability',
     'heldBy' => array('OCPSB', 'OCWMS'),
     'facets' => array('about:10', 'creator:10', 'datePublished:10', 'genre:10', 'itemType:10', 'inLanguage:10'),
+    'showReccomendations' => true,
+    'showDbpediaInfo' => true,
+    'showIdentitiesInfo' => true,
 );

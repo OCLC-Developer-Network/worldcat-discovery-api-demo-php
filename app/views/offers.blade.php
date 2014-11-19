@@ -4,6 +4,13 @@
     @if ($offers || getFulltextLink($record))
         @foreach ($offers as $offer)
             <p>{{$offer->getSeller()->getName()}}</p>
+            @if (getAvailability($record->getOCLCNumber(), $offer->getSeller()))
+                <ul>
+                @foreach(getAvailability($record->getOCLCNumber(), $offer->getSeller()) as $copy)
+                    <li>{{$copy['branchLocation']}} {{$copy['shelvingLocation']}} {{$copy['callNumber']}} - {{$copy['available']}}</li>
+                @endforeach
+                </ul>
+            @endif
         @endforeach
         @if (getFulltextLink($record))
             <p>{{link_to(getFulltextLink($record), 'Get Electronic Copy')}}</p>

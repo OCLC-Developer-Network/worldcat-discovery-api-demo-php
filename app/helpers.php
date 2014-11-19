@@ -11,7 +11,7 @@ function getIdentityURI($authorFamilyName, $oclcNumber){
     $identityOpenURL = 'http://www.worldcat.org/identities/find?url_ver=Z39.88-2004&rft_val_fmt=info:ofi/fmt:kev:mtx:identity&';
     $identityOpenURL .= 'rft.namelast=' . $authorFamilyName  . '&rft_id=info:oclcnum/' . $oclcNumber;
     $identity_xml = simplexml_load_file($identityOpenURL);
-    $identityURI = 'http://www.worldcat.org/identities/' . $identity_xml->match->key;
+    $identityURI = 'http://www.worldcat.org/identities/' . urlencode($identity_xml->match->key);
     return $identityURI;
 }
 
@@ -19,7 +19,8 @@ function getIdentityGraph($identityURI){
     $identityGraph = new EasyRDF_Graph($identityURI);
     $identityGraph->load();
     foreach ($identityGraph->resource($identityURI)->allResources('schema:knows') as $knows){
-        $identityGraph->load($knows);
+        $uri = str_replace(', ', urlencode(', '), $knows->getURI());
+        $identityGraph->load($uri);
     }
     return $identityGraph;
 }
@@ -34,10 +35,43 @@ function getReccomendations($oclcNumber){
     {
         $reccomendation = array('title' => $reccomendation->attributes()->title, 'oclcNumber' => $reccomendation->attributes()->ocn);
     });
-    
-    
-    
+
     return $reccomendations;
+}
+
+function getAvailability($oclcNumber, $seller){
+    $registryID = substr($seller->getURI(), strrpos($seller->getURI(), '/') +1);
+    $availabilityURL = Config::get('app.WMSAvailabilityAPIURL') . '/sru/service?x-registryId=' . $registryID . '&query=no:'. $oclcNumber;
+    
+    $accessToken = Session::get('wskey')->getAccessTokenWithClientCredentials(Config::get('app.institutionID'), $registryID);
+    if (!$accessToken->getErrorCode()){    
+        $guzzleOptions = array(
+                'headers' => array(
+                    'Authorization' => 'Bearer ' . $accessToken->getValue()
+                )
+            );
+        try {
+            $response = \Guzzle::get($availabilityURL, $guzzleOptions);
+            $availabilityXML = $response->xml();
+            $copies = $availabilityXML->xpath('//holdings/holding');
+            array_walk($copies, function (&$copy)
+            {
+                $copy = array(
+                    'branchLocation' => $copy->localLocation,
+                    'shelvingLocation' => $copy->shelvingLocation,
+                    'callNumber' => $copy->callNumber,
+                    'holds' => $copy->circulations->circulation->onHold->attributes()->value,
+                    'available' => ($copy->circulations->circulation->availableNow->attributes()->value == true) ? 'On the shelf' : 'Checked Out'
+                );
+            });
+        } catch (\Guzzle\Http\Exception\BadResponseException $error) {
+            $copies = null;
+        }
+    } else {
+        $copies = null;
+    }
+    
+    return $copies;
 }
 
 function getAuthorString($authors){
@@ -171,10 +205,6 @@ function getFulltextLink($record){
     if (isset($kbresponse[0]['url'])){
         return $kbresponse[0]['url'];
     }
-}
-
-function getRealTimeAvailability($oclcNumber, $registryID = null){
-    
 }
 
 function getFacetDisplayName($facet, $facetValue)

@@ -12,9 +12,19 @@ class RecordController extends BaseController {
 	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));
 	    } else{
 	        $creativeWorks = $response->getCreativeWorks();
-	        $identityKnows = identityKnows($creativeWorks[0]->getAuthor()->getFamilyName()->getValue(), $creativeWorks[0]->getOCLCNumber()->getValue());
-	        $reccomendations = getReccomendations($creativeWorks[0]->getOCLCNumber()->getValue());
-	        $this->layout->content = View::make('record', array('title' => $creativeWorks[0]->getName(), 'record' => $creativeWorks[0], 'offers' => $response->getOffers(), 'identityKnows' => $identityKnows, 'reccomendations' => $reccomendations));
+	        
+	        $viewVariables = array(
+	            'title' => $creativeWorks[0]->getName(), 
+	            'record' => $creativeWorks[0], 
+	            'offers' => $response->getOffers()
+	            );
+	        if(Config::get('app.showIdentitiesInfo')){
+	            $viewVariables['identityKnows'] = identityKnows($creativeWorks[0]->getAuthor()->getFamilyName()->getValue(), $creativeWorks[0]->getOCLCNumber()->getValue());
+	        }
+	        if (Config::get('app.showReccomendations')) {
+	            $viewVariables['reccomendations'] = getReccomendations($creativeWorks[0]->getOCLCNumber()->getValue());;
+	        }
+	        $this->layout->content = View::make('record', $viewVariables);
 	    }
 	}
 }

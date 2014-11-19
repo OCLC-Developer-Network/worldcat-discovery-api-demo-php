@@ -84,9 +84,10 @@ AccessToken::$authorizationServer =  Config::get('app.AuthorizationServerURL');
 Bib::$serviceUrl =  Config::get('app.DiscoveryAPIURL');
 
 $options =  array(
-    'services' => array('WorldCatDiscoveryAPI')
+    'services' => array('WorldCatDiscoveryAPI WMS_Availability')
 );
 $wskey = new WSKey(Config::get('app.wskey'), Config::get('app.secret'), $options);
+Session::put('wskey', $wskey);
  
-$accessToken = $wskey->getAccessTokenWithClientCredentials(Config::get('app.institutionID'), Config::get('app.institutionID'));
+$accessToken = Session::get('wskey')->getAccessTokenWithClientCredentials(Config::get('app.institutionID'), Config::get('app.institutionID'));
 Session::put('accessToken', $accessToken);

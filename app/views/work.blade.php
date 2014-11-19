@@ -97,8 +97,9 @@
             @endforeach
         </div>
         @endif
-        
-        @include('reccomendations', array('reccomendations'=> $reccomendations))
+        @if (Config::get('app.showReccomendations'))
+            @include('reccomendations', array('reccomendations'=> $reccomendations))
+        @endif
 </div>
     </div>
 </div>

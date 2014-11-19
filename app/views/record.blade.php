@@ -5,11 +5,11 @@
     @if (is_a($record, 'WorldCat\Discovery\Article'))
         @include('article', array('record' => $record))
     @else    
-        @include('work', array('record' => $record, 'reccomendations' => $reccomendations))
+        @include('work', array('record' => $record, 'reccomendations' =>  (empty($reccomendations)) ? null : $reccomendations))
     @endif
     <div id="availability-and-more" class="span-10 last">
         @include('offers', array('offers'=> $offers, 'record' => $record))
-        @include('moreInfo', array('identityKnows'=> $identityKnows, 'dbpediaURI'=> $record->getAuthor()->getDbpediaUri()))
+        @include('moreInfo', array('identityKnows'=> (empty($identityKnows)) ? null : $identityKnows, 'dbpediaURI'=> $record->getAuthor()->getDbpediaUri()))
     </div>
 </div>   
 @stop
