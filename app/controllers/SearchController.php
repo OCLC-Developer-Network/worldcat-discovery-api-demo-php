@@ -21,8 +21,18 @@ class SearchController extends BaseController {
 	        $facetQueries = array();
 	    }
 	    
+	    if (Input::get('sortBy')){
+	        $options['sortBy'] = Input::get('sortBy');
+	    } else {
+	        $options['sortBy'] = Config::get('app.sortBy');
+	    }
+	    
 	    if (Input::get('startNum')){
 	        $options['startNum'] = Input::get('startNum');
+	    }
+	    
+	    if (Config::get('app.debugAPIcalls')){
+	        $options['logger'] = getLogger();
 	    }
 	    
 	    $response = Bib::Search($query, Session::get('accessToken'), $options);

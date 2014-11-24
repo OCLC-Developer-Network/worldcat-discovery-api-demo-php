@@ -7,6 +7,11 @@ class RecordController extends BaseController {
 	public function getByID($id)
 	{
 	    $options = array('heldBy' => Config::get('app.heldBy'));
+	    
+	    if (Config::get('app.debugAPIcalls')){
+	        $options['logger'] = getLogger();
+	    }
+	    
 	    $response = Offer::findByOclcNumber($id, Session::get('accessToken'), $options);
 	    if (is_a($response, 'WorldCat\Discovery\Error')) {
 	        $this->layout->content = View::make('error', array('title' => 'Error', 'error' => $response));

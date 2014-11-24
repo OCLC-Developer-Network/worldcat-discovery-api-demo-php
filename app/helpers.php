@@ -1,4 +1,13 @@
 <?php
+use Guzzle\Log\PSRLogAdapter;
+use Guzzle\Plugin\Log\LogPlugin;
+
+function getLogger(){
+    $logger = Log::getMonolog();
+    $adapter = new PSRLogAdapter($logger);
+    $logPlugin = new LogPlugin($adapter, "{host} {method} {resource} {req_header_Authorization} \n {code} {reason} {res_header_X-OCLC-RequestId} {res_header_X-OCLC-SelfId}");
+    return $logPlugin;
+}
 function identityKnows($authorFamilyName, $oclcNumber){
     $identityURI = getIdentityURI($authorFamilyName, $oclcNumber);
     $graph = getIdentityGraph($identityURI);

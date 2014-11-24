@@ -188,7 +188,9 @@ return array(
     'WMSAvailabilityAPIURL' => 'https://worldcat.org/circ/availability',
     'heldBy' => array('OCPSB', 'OCWMS'),
     'facets' => array('about:10', 'creator:10', 'datePublished:10', 'genre:10', 'itemType:10', 'inLanguage:10'),
-    'showReccomendations' => true,
-    'showDbpediaInfo' => true,
-    'showIdentitiesInfo' => true,
+    'sortBy' => 'relevance',
+    'showReccomendations' => false,
+    'showDbpediaInfo' => false,
+    'showIdentitiesInfo' => false,
+    'debugAPIcalls' => true,
 );
