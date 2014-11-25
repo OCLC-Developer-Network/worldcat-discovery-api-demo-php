@@ -16,7 +16,7 @@ class SearchController extends BaseController {
 	    
 	    if (Input::get('facetQueries')){
 	        $facetQueries = convertFacetQueriesToArray(Input::get('facetQueries'));
-	        $options['facetQueries'] = $facetQueries;
+	        $options['facetQueries'] = explode(',', Input::get('facetQueries'));
 	    } else {
 	        $facetQueries = array();
 	    }
