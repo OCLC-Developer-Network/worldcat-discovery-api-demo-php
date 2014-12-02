@@ -189,6 +189,8 @@ return array(
     'heldBy' => array('OCPSB', 'OCWMS'),
     'facets' => array('about:10', 'creator:10', 'datePublished:10', 'genre:10', 'itemType:10', 'inLanguage:10'),
     'sortBy' => 'relevance',
+	'showAvailability' => false,
+	'showEHoldings' => false,
     'showReccomendations' => false,
     'showDbpediaInfo' => false,
     'showIdentitiesInfo' => false,
