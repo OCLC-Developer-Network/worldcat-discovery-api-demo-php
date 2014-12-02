@@ -38,6 +38,20 @@ return array(
     'secret' => 'your-secret'
 );
 ```
+### Step 4: Configure the application
+Edit the /app/config/app.php file
+
+institutionID - your institution WorldCat RegistryID
+heldBy - array that includes your OCLC Symbol
+
+Optionally enable
+showAvailability
+showEHoldings
+showReccomendations
+showDbpediaInfo
+showIdentitiesInfo
+debugAPIcalls
+
 ## Usage
 
 To run the app, point your web browser at the localhost address where these instructions will install it by default. 
