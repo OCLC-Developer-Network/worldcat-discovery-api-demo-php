@@ -101,7 +101,11 @@ function getAuthorString($authors){
 }
 function getPlaceOfPublicationString($placesOfPublication){
     if (count($placesOfPublication) == 1){
-        return $placesOfPublication;
+    	if ($placesOfPublication[0]->getName()){
+    		return $placesOfPublication[0]->getName();
+    	} else {	
+        	return $placesOfPublication[0]->getId();
+    	}
     } else {
         $places = array();
         foreach($placesOfPublication as $place){

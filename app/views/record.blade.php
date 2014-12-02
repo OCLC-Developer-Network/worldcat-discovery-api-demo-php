@@ -9,7 +9,8 @@
     @endif
     <div id="availability-and-more" class="span-10 last">
         @include('offers', array('offers'=> $offers, 'record' => $record))
-        @include('moreInfo', array('identityKnows'=> (empty($identityKnows)) ? null : $identityKnows, 'dbpediaURI'=> $record->getAuthor()->getDbpediaUri()))
+        @include('moreInfo', array('identityKnows'=> (empty($identityKnows)) ? null : $identityKnows, 'dbpediaURI'=> (empty($dbpediaURI)) ? null : $dbpediaURI))
+        
     </div>
 </div>   
 @stop

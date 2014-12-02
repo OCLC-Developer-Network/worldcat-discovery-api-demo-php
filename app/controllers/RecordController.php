@@ -27,8 +27,13 @@ class RecordController extends BaseController {
 	            $viewVariables['identityKnows'] = identityKnows($creativeWorks[0]->getAuthor()->getFamilyName()->getValue(), $creativeWorks[0]->getOCLCNumber()->getValue());
 	        }
 	        if (Config::get('app.showReccomendations')) {
-	            $viewVariables['reccomendations'] = getReccomendations($creativeWorks[0]->getOCLCNumber()->getValue());;
+	            $viewVariables['reccomendations'] = getReccomendations($creativeWorks[0]->getOCLCNumber()->getValue());
 	        }
+	        
+	        if (Config::get('app.showDbpediaInfo')) {
+	        	$viewVariables['dbpediaURI'] = ($record->getAuthor() ? $record->getAuthor()->getDbpediaUri() : null);
+	        }
+	        
 	        $this->layout->content = View::make('record', $viewVariables);
 	    }
 	}
