@@ -130,7 +130,7 @@ function getLanguageString($language)
 
 function getMarcLanguageString($language)
 {
-    $languageFile = Yaml::parse(app_path() . '/config/marclanguages.yml');
+    $languageFile = Yaml::parse(app_path() . '/config/marcLanguages.yml');
     return $languageFile[$language->getValue()];
 }
 
